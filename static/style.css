@@ -1,0 +1,125 @@
+body{
+    background:#f1f3f6;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:#1e6091 !important;
+    height:80px;
+    box-shadow:0px 2px 10px rgba(0,0,0,0.2);
+}
+
+.titulo-navbar{
+    color:white;
+    font-size:38px;
+    font-weight:bold;
+}
+
+/* CARDS */
+
+.card{
+    border:none;
+    border-radius:10px;
+    box-shadow:0px 3px 10px rgba(0,0,0,0.1);
+}
+
+/* TITULOS */
+
+.titulo-seccion{
+    color:#1e6091;
+    font-weight:bold;
+}
+
+/* PANEL HEADER */
+
+.panel-header{
+    background:#1e6091;
+    color:white;
+    padding:15px;
+    border-radius:10px 10px 0px 0px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* PANEL BODY */
+
+.panel-body{
+    padding:20px;
+}
+
+/* TABLA */
+
+.table{
+    background:white;
+}
+
+.table thead{
+    font-size:15px;
+}
+
+/* BOTONES */
+
+.btn{
+    border-radius:8px;
+}
+
+/* BOTON PRINCIPAL */
+
+.btn-primary{
+    background:#1e6091 !important;
+    border:none !important;
+}
+
+.btn-primary:hover{
+    background:#184e77 !important;
+}
+
+/* FOOTER */
+
+.footer{
+    background:#1e6091;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:30px;
+    font-size:18px;
+}
+
+/* ALTURA DE PANELES */
+
+.panel-formulario{
+    min-height:650px;
+}
+
+.panel-tabla{
+    min-height:650px;
+}
+
+/* INPUTS */
+
+input{
+    border-radius:8px !important;
+}
+
+/* ALERTAS */
+
+.alert{
+    border-radius:10px;
+    font-size:16px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .titulo-navbar{
+        font-size:24px;
+    }
+
+    .panel-formulario{
+        margin-bottom:20px;
+    }
+
+}

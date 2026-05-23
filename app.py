@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 import pyodbc
 
 app = Flask(__name__)
+
+app.secret_key = "proyectoazure"
 
 conexion = pyodbc.connect(
     "DRIVER={ODBC Driver 18 for SQL Server};"
@@ -14,16 +16,42 @@ conexion = pyodbc.connect(
     "Connection Timeout=30;"
 )
 
+# ----------------------------------------
+# INICIO
+# ----------------------------------------
+
 @app.route('/')
 def inicio():
 
+    buscar = request.args.get('buscar')
+
     cursor = conexion.cursor()
 
-    cursor.execute("SELECT * FROM estudiantes")
+    if buscar:
+
+        cursor.execute(
+            "SELECT * FROM estudiantes WHERE id = ?",
+            (buscar,)
+        )
+
+        flash(f"Búsqueda realizada para ID: {buscar}", "info")
+
+    else:
+
+        cursor.execute(
+            "SELECT * FROM estudiantes"
+        )
 
     estudiantes = cursor.fetchall()
 
-    return render_template("index.html", estudiantes=estudiantes)
+    return render_template(
+        "index.html",
+        estudiantes=estudiantes
+    )
+
+# ----------------------------------------
+# AGREGAR
+# ----------------------------------------
 
 @app.route('/agregar', methods=['POST'])
 def agregar():
@@ -42,7 +70,13 @@ def agregar():
 
     conexion.commit()
 
+    flash("Estudiante guardado correctamente", "success")
+
     return redirect('/')
+
+# ----------------------------------------
+# ELIMINAR
+# ----------------------------------------
 
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
@@ -56,7 +90,14 @@ def eliminar(id):
 
     conexion.commit()
 
+    flash("Estudiante eliminado correctamente", "danger")
+
     return redirect('/')
+
+# ----------------------------------------
+# EDITAR
+# ----------------------------------------
+
 @app.route('/editar/<int:id>')
 def editar(id):
 
@@ -74,6 +115,10 @@ def editar(id):
         estudiante=estudiante
     )
 
+# ----------------------------------------
+# ACTUALIZAR
+# ----------------------------------------
+
 @app.route('/actualizar/<int:id>', methods=['POST'])
 def actualizar(id):
 
@@ -86,15 +131,17 @@ def actualizar(id):
 
     cursor.execute("""
         UPDATE estudiantes
-        SET nombre = ?,
-            correo = ?,
-            edad = ?,
-            carrera = ?
+        SET nombre = ?, correo = ?, edad = ?, carrera = ?
         WHERE id = ?
     """, (nombre, correo, edad, carrera, id))
 
     conexion.commit()
 
+    flash("Estudiante actualizado correctamente", "warning")
+
     return redirect('/')
+
+# ----------------------------------------
+
 if __name__ == '__main__':
     app.run(debug=True)
