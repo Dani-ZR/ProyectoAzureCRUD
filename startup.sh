@@ -1,1 +1,1 @@
-gunicorn app:app
+gunicorn app:appgit push origin main
